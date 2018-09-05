@@ -40,7 +40,7 @@
             android:layout_marginTop="68dp"
             android:ems="10"
             android:inputType="textPassword"
-            android:text="@={viewModel.senha}"
+            android:text="@={viewModel.password}"
             app:layout_constraintBottom_toTopOf="@+id/button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.503"

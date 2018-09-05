@@ -1,5 +1,9 @@
 package com.example.iaralopes.empresasjava.Service;
 
+import com.example.iaralopes.empresasjava.Login.Credentials;
+import com.example.iaralopes.empresasjava.Login.UserPayload;
+
+import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
@@ -15,7 +19,7 @@ public interface APIServices {
 //    Call<EnterprisePayload> getEnterprise(@Header("access-token") String accessToken, @Header("client") String client,
 //                                          @Header("uid") String uid, @Path("id") int id);
 //
-//    @POST("users/auth/sign_in")
-//    Call<UserPayload> authorizeUser(@Body Credentials credential);
+    @POST("users/auth/sign_in")
+    Call<UserPayload> authorizeUser(@Body Credentials credential);
 }
 
