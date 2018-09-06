@@ -1,18 +1,15 @@
 package com.example.iaralopes.empresasjava.Login;
 
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.databinding.DataBindingUtil;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.example.iaralopes.empresasjava.R;
 import com.example.iaralopes.empresasjava.databinding.ActivityMainBinding;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements LoginViewInterface {
 
     private ActivityMainBinding binding;
     private LoginViewModel viewModel;
@@ -30,7 +27,12 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    public void onLoginClick (View view) {
+    public void onLoginClick(View view) {
         binding.getViewModel().onLoginClick();
     }
+
+
+
+
+
 }
