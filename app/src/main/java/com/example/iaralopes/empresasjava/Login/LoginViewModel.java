@@ -36,22 +36,18 @@ public class LoginViewModel extends BaseViewModel implements LoginViewModelInter
 
        credentials = new Credentials(mEmail, mPassword);
 
-       repository.getObservable(credentials).subscribeWith(getObserver());
+       repository.getLoginObservable(credentials).subscribeWith(getLoginObserver());
 
 
     }
 
 
-    public DisposableObserver<Response<UserPayload>> getObserver(){
-        return new DisposableObserver<Response<UserPayload>>() {
+    private DisposableObserver<UserPayload> getLoginObserver(){
+        return new DisposableObserver<UserPayload>() {
 
-//            Response<UserPayload> response;
 
             @Override
-            public void onNext(@NonNull Response<UserPayload> response) {
-                SharedPreferenceUtils.getInstance(MyApplication.getAppContext()).setValue("uid", response.headers().get("uid"));
-                SharedPreferenceUtils.getInstance(MyApplication.getAppContext()).setValue("client", response.headers().get("client"));
-                SharedPreferenceUtils.getInstance(MyApplication.getAppContext()).setValue("access-token", response.headers().get("access-token"));
+            public void onNext(@NonNull UserPayload response) {
 
             }
 
@@ -59,7 +55,6 @@ public class LoginViewModel extends BaseViewModel implements LoginViewModelInter
             public void onError(@NonNull Throwable e) {
                 Log.d("LoginViewModel","Error"+e);
                 e.printStackTrace();
-//                mvi.displayError("Error fetching Movie Data");
             }
 
             @Override
@@ -70,20 +65,6 @@ public class LoginViewModel extends BaseViewModel implements LoginViewModelInter
             }
         };
     }
-
-
-//    public void onLoginClick() {
-
-//
-//        repository.login(mEmail, mPassword);
-//      //  Log.i("AuthHeaders", SharedPreferenceUtils.getInstance(MyApplication.getAppContext()).getStringValue("uid", null));
-//    }
-
-
-
-
-
-
 
 
 }

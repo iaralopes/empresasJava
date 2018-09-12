@@ -11,17 +11,19 @@ public class RetrofitClient {
 
 
     private static Retrofit getRetrofitInstance() {
+        OkHttpClient.Builder okHttpBuilder = new OkHttpClient.Builder()
+                                            .addInterceptor(new RequestInterceptor());
 
 
         return new Retrofit.Builder()
                 .baseUrl(ROOT_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .client(okHttpBuilder.build())
                 .build();
     }
 
     public static APIServices getAPIService() {
-
         return getRetrofitInstance().create(APIServices.class);
     }
 
