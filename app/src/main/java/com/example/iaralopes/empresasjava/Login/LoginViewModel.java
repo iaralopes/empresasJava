@@ -2,6 +2,7 @@ package com.example.iaralopes.empresasjava.Login;
 
 import android.databinding.ObservableField;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
 import com.example.iaralopes.empresasjava.Base.BaseViewModel;
@@ -20,6 +21,7 @@ public class LoginViewModel extends BaseViewModel implements LoginViewModelInter
 
     public ObservableField<String> email = new ObservableField<>();
     public ObservableField<String> password = new ObservableField<>();
+
 
     private LoginViewInterface loginViewInterface;
     private Credentials credentials;

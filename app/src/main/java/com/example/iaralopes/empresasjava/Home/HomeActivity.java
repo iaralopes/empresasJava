@@ -4,26 +4,29 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.Adapter;
 
 import com.example.iaralopes.empresasjava.Login.LoginViewModel;
+import com.example.iaralopes.empresasjava.MyApplication;
 import com.example.iaralopes.empresasjava.R;
 import com.example.iaralopes.empresasjava.databinding.ActivityHomeBinding;
 import com.example.iaralopes.empresasjava.databinding.ActivityMainBinding;
+import com.genius.groupie.GroupAdapter;
+import com.genius.groupie.Section;
 
 public class HomeActivity extends AppCompatActivity implements HomeViewInterface {
 
-    RecyclerView rvEnterprises;
-
-    RecyclerView.Adapter adapter;
 
     private ActivityHomeBinding binding;
     HomeViewModel viewModel;
 
+    RecyclerView rvEnterprises;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_home);
 
@@ -32,10 +35,11 @@ public class HomeActivity extends AppCompatActivity implements HomeViewInterface
         binding.setViewModel(viewModel);
 
         setupMVVM();
+        getEnterpriseList();
     }
 
     private void setupMVVM() {
-        viewModel.setupMVVM(this);
+        viewModel.setupMVVM();
     }
 
     private void getEnterpriseList() {
@@ -43,8 +47,7 @@ public class HomeActivity extends AppCompatActivity implements HomeViewInterface
     }
 
     @Override
-    public void displayEnterprises(EnterpriseList enterprise) {
-            adapter = new ListEnterpriseAdapter(enterprise.getEnterprises(), HomeActivity.this);
-            rvEnterprises.setAdapter(adapter);
+    public void displayEnterprises(GroupAdapter adapter) {
+//        rvEnterprises.setAdapter(adapter);
     }
 }

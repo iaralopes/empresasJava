@@ -26,13 +26,22 @@ public class SharedPreferenceUtils {
     }
 
 
-    public void setValue(String key, String value) {
+    public void setStringValue(String key, String value) {
         mSharedPreferencesEditor.putString(key, value);
+        mSharedPreferencesEditor.commit();
+    }
+
+    public void setBooleanValue(String key, Boolean value) {
+        mSharedPreferencesEditor.putBoolean(key, value);
         mSharedPreferencesEditor.commit();
     }
 
     public String getStringValue(String key, String defaultValue) {
         return mSharedPreferences.getString(key, defaultValue);
+    }
+
+    public Boolean getBooleanValue(String key, Boolean defaultValue) {
+        return mSharedPreferences.getBoolean(key, defaultValue);
     }
 
 

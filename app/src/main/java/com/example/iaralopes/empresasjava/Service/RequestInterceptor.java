@@ -34,9 +34,9 @@ public class RequestInterceptor implements Interceptor {
         client = headers.get("client");
         accessToken = headers.get("access-token");
 
-        SharedPreferenceUtils.getInstance(MyApplication.getAppContext()).setValue("uid", uid);
-        SharedPreferenceUtils.getInstance(MyApplication.getAppContext()).setValue("client", client);
-        SharedPreferenceUtils.getInstance(MyApplication.getAppContext()).setValue("access-token", accessToken);
+        SharedPreferenceUtils.getInstance(MyApplication.getAppContext()).setStringValue("uid", uid);
+        SharedPreferenceUtils.getInstance(MyApplication.getAppContext()).setStringValue("client", client);
+        SharedPreferenceUtils.getInstance(MyApplication.getAppContext()).setStringValue("access-token", accessToken);
 
     }
 

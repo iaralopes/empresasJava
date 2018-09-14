@@ -24,19 +24,14 @@ public class HomeViewModel extends BaseViewModel {
 //    public ObservableField<String> category = new ObservableField<>();
 //    public ObservableField<String> country = new ObservableField<>();
 
-    private HomeRepository repository = new HomeRepository();
+    private HomeRepository repository;
 
-    private HomeViewInterface homeViewInterface;
-
-
-    private EnterpriseList data = new EnterpriseList();
-
-    public ListEnterpriseAdapter adapter = new ListEnterpriseAdapter();
+    public ListEnterpriseAdapter adapter;
 
 
-    public void setupMVVM (HomeViewInterface homeViewInterface) {
-        this.homeViewInterface = homeViewInterface;
-
+    public void setupMVVM () {
+        repository = new HomeRepository();
+        adapter = new ListEnterpriseAdapter();
     }
 
     public void getEnterpriseList () {
@@ -50,8 +45,7 @@ public class HomeViewModel extends BaseViewModel {
             public void onNext(@NonNull EnterpriseList response) {
                 Log.d("response", response.toString());
    //             adapter = new ListEnterpriseAdapter(response.getEnterprises());
-                data = response;
-                adapter.addItems(data.getEnterprises());
+                adapter.addItems(response.getEnterprises());
             }
 
             @Override
