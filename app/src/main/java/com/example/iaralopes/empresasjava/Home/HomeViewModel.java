@@ -5,6 +5,8 @@ import android.databinding.BindingAdapter;
 import android.databinding.ObservableField;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
 import com.example.iaralopes.empresasjava.Base.BaseViewModel;
@@ -25,13 +27,17 @@ public class HomeViewModel extends BaseViewModel {
 //    public ObservableField<String> country = new ObservableField<>();
 
     private HomeRepository repository;
-
     public ListEnterpriseAdapter adapter;
+    private List<Enterprise> listEnterprises;
 
 
     public void setupMVVM () {
         repository = new HomeRepository();
         adapter = new ListEnterpriseAdapter();
+    }
+
+    public void listAll () {
+        adapter.addItems(listEnterprises);
     }
 
     public void getEnterpriseList () {
@@ -44,8 +50,8 @@ public class HomeViewModel extends BaseViewModel {
             @Override
             public void onNext(@NonNull EnterpriseList response) {
                 Log.d("response", response.toString());
-   //             adapter = new ListEnterpriseAdapter(response.getEnterprises());
-                adapter.addItems(response.getEnterprises());
+                listEnterprises = response.getEnterprises();
+                adapter.addItems(listEnterprises);
             }
 
             @Override
@@ -58,6 +64,32 @@ public class HomeViewModel extends BaseViewModel {
             public void onComplete() {
                 Log.d("HomeViewModel","Completed");
               //  homeViewInterface.displayEnterprises(adapter);
+
+            }
+        };
+    }
+
+
+    public void getEnterpriseListWithFilter (SearchView searchView) {
+        repository.getResultsBasedOnQuery(searchView).subscribeWith(getEnterpriseListWithFilterObserver());
+    }
+
+    public DisposableObserver<EnterpriseList> getEnterpriseListWithFilterObserver(){
+        return new DisposableObserver<EnterpriseList>() {
+
+            @Override
+            public void onNext(@NonNull EnterpriseList response) {
+                adapter.addItems(response.getEnterprises());
+
+            }
+
+            @Override
+            public void onError(@NonNull Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
 
             }
         };

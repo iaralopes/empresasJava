@@ -1,5 +1,7 @@
 package com.example.iaralopes.empresasjava.Service;
 
+import android.util.Log;
+
 import com.example.iaralopes.empresasjava.MyApplication;
 import com.example.iaralopes.empresasjava.SharedPreference.SharedPreferenceUtils;
 
@@ -37,6 +39,7 @@ public class RequestInterceptor implements Interceptor {
         SharedPreferenceUtils.getInstance(MyApplication.getAppContext()).setStringValue("uid", uid);
         SharedPreferenceUtils.getInstance(MyApplication.getAppContext()).setStringValue("client", client);
         SharedPreferenceUtils.getInstance(MyApplication.getAppContext()).setStringValue("access-token", accessToken);
+
 
     }
 

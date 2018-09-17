@@ -10,11 +10,15 @@ import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 
 public interface APIServices {
 
     @GET("enterprises")
     Observable<EnterpriseList> getEnterprises();
+
+    @GET("enterprises")
+    Observable<EnterpriseList> getEnterprisesBasedOnQuery(@Query("name") String name);
 
 //    @GET("enterprises/{id}")
 //    Call<EnterprisePayload> getEnterprise(@Header("access-token") String accessToken, @Header("client") String client,

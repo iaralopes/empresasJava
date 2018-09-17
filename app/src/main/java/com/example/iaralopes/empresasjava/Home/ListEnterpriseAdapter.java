@@ -19,12 +19,22 @@ public class ListEnterpriseAdapter extends GroupAdapter {
 
     public void addItems (List<Enterprise> listEnterprise) {
         this.listEnterprise = listEnterprise;
+
+        clear();
+
         for(Enterprise e : listEnterprise) {
             add(new ListEnterpriseItem(e));
         }
+
+        notifyDataSetChanged();
     }
 
-//    @Override
+    @Override
+    public void clear() {
+        super.clear();
+    }
+
+    //    @Override
 //    public ListEnterpriseHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 //        View v = LayoutInflater.from(context).inflate(R.layout.row_enterprises, parent,false);
 //        ListEnterpriseHolder listEnterpriseHolder = new ListEnterpriseHolder(v);

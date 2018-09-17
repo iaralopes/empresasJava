@@ -1,20 +1,20 @@
 package com.example.iaralopes.empresasjava.Home;
 
+import android.app.SearchManager;
+import android.app.SearchableInfo;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.widget.Adapter;
+import android.support.v7.widget.SearchView;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.Toolbar;
 
-import com.example.iaralopes.empresasjava.Login.LoginViewModel;
-import com.example.iaralopes.empresasjava.MyApplication;
 import com.example.iaralopes.empresasjava.R;
 import com.example.iaralopes.empresasjava.databinding.ActivityHomeBinding;
-import com.example.iaralopes.empresasjava.databinding.ActivityMainBinding;
-import com.genius.groupie.GroupAdapter;
-import com.genius.groupie.Section;
 
 public class HomeActivity extends AppCompatActivity implements HomeViewInterface {
 
@@ -22,7 +22,6 @@ public class HomeActivity extends AppCompatActivity implements HomeViewInterface
     private ActivityHomeBinding binding;
     HomeViewModel viewModel;
 
-    RecyclerView rvEnterprises;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +32,7 @@ public class HomeActivity extends AppCompatActivity implements HomeViewInterface
         viewModel = ViewModelProviders.of(this).get(HomeViewModel.class);
 
         binding.setViewModel(viewModel);
+
 
         setupMVVM();
         getEnterpriseList();
@@ -47,7 +47,56 @@ public class HomeActivity extends AppCompatActivity implements HomeViewInterface
     }
 
     @Override
-    public void displayEnterprises(GroupAdapter adapter) {
-//        rvEnterprises.setAdapter(adapter);
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+
+        MenuItem item = menu.findItem(R.id.action_search);
+
+        final SearchView searchView =
+                (SearchView)item.getActionView();
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                viewModel.getEnterpriseListWithFilter(searchView);
+                return false;
+            }
+
+        });
+
+        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                viewModel.listAll();
+                return false;
+            }
+        });
+
+//        SearchManager searchManager =
+//                (SearchManager)getSystemService(Context.SEARCH_SERVICE);
+//        SearchableInfo info =
+//                searchManager.getSearchableInfo(getComponentName());
+//        searchView.setSearchableInfo(info);
+
+        return true;
+     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+        if(id == R.id.action_search){
+       //     Intent i = new Intent(HomeActivity.this, SearchActivity.class);
+       //     startActivity(i);
+        }
+
+        return super.onOptionsItemSelected(item);
     }
+
+
 }

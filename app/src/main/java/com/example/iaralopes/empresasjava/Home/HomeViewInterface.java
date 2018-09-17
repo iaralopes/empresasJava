@@ -4,5 +4,4 @@ import com.genius.groupie.GroupAdapter;
 
 public interface HomeViewInterface {
 
-    void displayEnterprises(GroupAdapter adapter);
 }
