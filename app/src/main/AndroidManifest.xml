@@ -23,19 +23,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Home.HomeActivity" />
+        <activity android:name=".Home.HomeActivity"/>
         <activity android:name=".Base.BaseActivity" />
-        <activity android:name=".Search.SearchActivity">
-
-            <meta-data
-                android:name="android.app.searchable"
-                android:resource="@xml/searchable" />
-
-            <intent-filter>
-                <action android:name="android.intent.action.SEARCH" />
-            </intent-filter>
-
-        </activity>
+        <activity android:name=".Detail.DetailActivity"></activity>
     </application>
 
 </manifest>

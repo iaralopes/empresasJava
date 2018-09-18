@@ -1,4 +1,4 @@
-package com.example.iaralopes.empresasjava.Home;
+package com.example.iaralopes.empresasjava.Enterprise;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

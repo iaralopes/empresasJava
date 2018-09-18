@@ -1,5 +1,6 @@
 package com.example.iaralopes.empresasjava.Home;
 
+import android.app.ActionBar;
 import android.app.SearchManager;
 import android.app.SearchableInfo;
 import android.arch.lifecycle.ViewModelProviders;
@@ -11,8 +12,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toolbar;
 
+import com.example.iaralopes.empresasjava.Detail.DetailActivity;
 import com.example.iaralopes.empresasjava.R;
 import com.example.iaralopes.empresasjava.databinding.ActivityHomeBinding;
 
@@ -28,23 +29,25 @@ public class HomeActivity extends AppCompatActivity implements HomeViewInterface
         super.onCreate(savedInstanceState);
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_home);
-
         viewModel = ViewModelProviders.of(this).get(HomeViewModel.class);
-
         binding.setViewModel(viewModel);
 
+        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setCustomView(R.layout.action_bar);
+        getSupportActionBar().setDisplayShowCustomEnabled(true);
 
         setupMVVM();
         getEnterpriseList();
     }
 
     private void setupMVVM() {
-        viewModel.setupMVVM();
+        viewModel.setupMVVM(this);
     }
 
     private void getEnterpriseList() {
         viewModel.getEnterpriseList();
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -77,11 +80,7 @@ public class HomeActivity extends AppCompatActivity implements HomeViewInterface
             }
         });
 
-//        SearchManager searchManager =
-//                (SearchManager)getSystemService(Context.SEARCH_SERVICE);
-//        SearchableInfo info =
-//                searchManager.getSearchableInfo(getComponentName());
-//        searchView.setSearchableInfo(info);
+
 
         return true;
      }
@@ -96,6 +95,12 @@ public class HomeActivity extends AppCompatActivity implements HomeViewInterface
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void getDetails (int enterpriseID) {
+        Intent intent = new Intent(HomeActivity.this, DetailActivity.class);
+        intent.putExtra("ID", enterpriseID);
+        startActivity(intent);
     }
 
 

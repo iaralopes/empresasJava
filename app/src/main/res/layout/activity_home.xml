@@ -10,14 +10,24 @@
             type="com.example.iaralopes.empresasjava.Home.HomeViewModel"/>
     </data>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvEnterprise"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/mainBackground"
         app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
         app:setAdapter="@{viewModel.adapter}"
         />
+
+    </LinearLayout>
 
 
 </layout>

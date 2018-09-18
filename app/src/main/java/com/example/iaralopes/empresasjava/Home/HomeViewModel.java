@@ -1,48 +1,45 @@
 package com.example.iaralopes.empresasjava.Home;
 
-import android.databinding.Bindable;
-import android.databinding.BindingAdapter;
-import android.databinding.ObservableField;
+import android.content.Intent;
+import android.net.wifi.hotspot2.pps.HomeSp;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 
 import com.example.iaralopes.empresasjava.Base.BaseViewModel;
-import com.example.iaralopes.empresasjava.Login.LoginViewInterface;
-import com.example.iaralopes.empresasjava.Login.UserPayload;
-import com.example.iaralopes.empresasjava.R;
-import com.genius.groupie.GroupAdapter;
+import com.example.iaralopes.empresasjava.Enterprise.Enterprise;
+import com.example.iaralopes.empresasjava.Enterprise.EnterpriseList;
 
-import java.nio.file.attribute.GroupPrincipal;
 import java.util.List;
 
 import io.reactivex.observers.DisposableObserver;
 
-public class HomeViewModel extends BaseViewModel {
-
-//    public ObservableField<String> name = new ObservableField<>();
-//    public ObservableField<String> category = new ObservableField<>();
-//    public ObservableField<String> country = new ObservableField<>();
+public class HomeViewModel extends BaseViewModel implements HomeViewModelInterface {
 
     private HomeRepository repository;
     public ListEnterpriseAdapter adapter;
     private List<Enterprise> listEnterprises;
+    private HomeViewInterface homeViewInterface;
+    private HomeViewModelInterface homeViewModelInterface;
 
 
-    public void setupMVVM () {
+    public void setupMVVM (HomeViewInterface homeViewInterface) {
         repository = new HomeRepository();
         adapter = new ListEnterpriseAdapter();
+        this.homeViewInterface = homeViewInterface;
+        homeViewModelInterface = this;
     }
 
     public void listAll () {
-        adapter.addItems(listEnterprises);
+        adapter.addItems(homeViewModelInterface, listEnterprises);
     }
 
     public void getEnterpriseList () {
         repository.getEnterpriseListObservable().subscribeWith(getEnterpriseListObserver());
     }
+
 
     private DisposableObserver<EnterpriseList> getEnterpriseListObserver(){
         return new DisposableObserver<EnterpriseList>() {
@@ -51,7 +48,7 @@ public class HomeViewModel extends BaseViewModel {
             public void onNext(@NonNull EnterpriseList response) {
                 Log.d("response", response.toString());
                 listEnterprises = response.getEnterprises();
-                adapter.addItems(listEnterprises);
+                adapter.addItems(homeViewModelInterface, listEnterprises);
             }
 
             @Override
@@ -79,7 +76,7 @@ public class HomeViewModel extends BaseViewModel {
 
             @Override
             public void onNext(@NonNull EnterpriseList response) {
-                adapter.addItems(response.getEnterprises());
+                adapter.addItems(homeViewModelInterface, response.getEnterprises());
 
             }
 
@@ -94,6 +91,12 @@ public class HomeViewModel extends BaseViewModel {
             }
         };
     }
+
+
+    public void getDetails(int enterpriseID) {
+        homeViewInterface.getDetails(enterpriseID);
+    }
+
 
 
 }

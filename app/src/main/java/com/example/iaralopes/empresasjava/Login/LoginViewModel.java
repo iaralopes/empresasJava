@@ -19,8 +19,8 @@ import retrofit2.Response;
 
 public class LoginViewModel extends BaseViewModel implements LoginViewModelInterface  {
 
-    public ObservableField<String> email = new ObservableField<>();
-    public ObservableField<String> password = new ObservableField<>();
+    public ObservableField<String> email;
+    public ObservableField<String> password;
 
 
     private LoginViewInterface loginViewInterface;
@@ -29,6 +29,8 @@ public class LoginViewModel extends BaseViewModel implements LoginViewModelInter
     private LoginRepository repository = new LoginRepository();
 
     public void setupMVVM (LoginViewInterface loginViewInterface) {
+        email = new ObservableField<>();
+        password = new ObservableField<>();
         this.loginViewInterface = loginViewInterface;
     }
 

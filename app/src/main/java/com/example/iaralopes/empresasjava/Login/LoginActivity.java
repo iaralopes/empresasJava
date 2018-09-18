@@ -3,10 +3,14 @@ package com.example.iaralopes.empresasjava.Login;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.example.iaralopes.empresasjava.Home.HomeActivity;
 import com.example.iaralopes.empresasjava.MyApplication;
@@ -26,10 +30,17 @@ public class LoginActivity extends AppCompatActivity implements LoginViewInterfa
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        getSupportActionBar().hide();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(Color.rgb(181, 180,166));
+        }
+
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-
         viewModel = ViewModelProviders.of(this).get(LoginViewModel.class);
-
         binding.setViewModel(viewModel);
 
         setupMVVM();

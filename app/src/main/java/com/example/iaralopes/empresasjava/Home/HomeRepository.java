@@ -3,8 +3,7 @@ package com.example.iaralopes.empresasjava.Home;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.SearchView;
 
-import com.example.iaralopes.empresasjava.Login.Credentials;
-import com.example.iaralopes.empresasjava.Login.UserPayload;
+import com.example.iaralopes.empresasjava.Enterprise.EnterpriseList;
 import com.example.iaralopes.empresasjava.Service.RetrofitClient;
 
 import java.util.concurrent.TimeUnit;
