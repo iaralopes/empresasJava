@@ -1,6 +1,9 @@
 package com.example.iaralopes.empresasjava.Login;
 
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Color;
@@ -8,9 +11,13 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.iaralopes.empresasjava.Home.HomeActivity;
 import com.example.iaralopes.empresasjava.MyApplication;
@@ -25,6 +32,10 @@ public class LoginActivity extends AppCompatActivity implements LoginViewInterfa
 
     private ActivityMainBinding binding;
     private LoginViewModel viewModel;
+
+    private ProgressDialog progressDialog;
+    private AlertDialog alertDialog;
+
 
 
     @Override
@@ -57,11 +68,67 @@ public class LoginActivity extends AppCompatActivity implements LoginViewInterfa
 
     public void userAuthorized() {
         Log.d("uid", SharedPreferenceUtils.getInstance(MyApplication.getAppContext()).getStringValue("uid", null));
+        progressDialog.dismiss();
         Intent enterprisesList = new Intent(LoginActivity.this, HomeActivity.class);
         LoginActivity.this.startActivity(enterprisesList);
 
     }
 
+    public void userUnauthorized() {
+
+        LayoutInflater layoutInflater = getLayoutInflater();
+
+        View view = layoutInflater.inflate(R.layout.dialog_alert, null);
+
+        view.findViewById(R.id.alertButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+            }
+        });
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setView(view);
+        alertDialog = builder.create();
+        alertDialog.show();
+
+
+
+//        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//
+//        builder.setTitle("Dados incorretos");
+//
+//        builder.setMessage("Por favor, tente novamente");
+//
+//        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                alertDialogDismiss();
+//            }
+//        });
+//
+//        alertDialog = builder.create();
+//        alertDialog.show();
+
+    }
+
+    public void loginSuccess() {
+        progressDialog = ProgressDialog.show(LoginActivity.this, "Por favor, aguarde...", "");
+//        Toast.makeText(this, "Login success", Toast.LENGTH_SHORT).show();
+    }
+
+    public void loginError(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+
+    public void progressDialogDismiss() {
+        progressDialog.dismiss();
+    }
+
+    public void alertDialogDismiss() {
+        alertDialog.dismiss();
+    }
 
 
 

@@ -39,7 +39,7 @@ public class HomeRepository {
                         }
                     }
                 })
-                .debounce(1, TimeUnit.SECONDS)
+                .debounce(0, TimeUnit.SECONDS)
                 .distinctUntilChanged()
                 .switchMap(new Function<String, ObservableSource<EnterpriseList>>() {
                     @Override

@@ -2,20 +2,11 @@ package com.example.iaralopes.empresasjava.Login;
 
 import android.databinding.ObservableField;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
 import com.example.iaralopes.empresasjava.Base.BaseViewModel;
-import com.example.iaralopes.empresasjava.MyApplication;
-import com.example.iaralopes.empresasjava.Service.APIServices;
-import com.example.iaralopes.empresasjava.Service.RetrofitClient;
-import com.example.iaralopes.empresasjava.SharedPreference.SharedPreferenceUtils;
 
-import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableObserver;
-import io.reactivex.schedulers.Schedulers;
-import retrofit2.Response;
 
 public class LoginViewModel extends BaseViewModel implements LoginViewModelInterface  {
 
@@ -40,8 +31,23 @@ public class LoginViewModel extends BaseViewModel implements LoginViewModelInter
 
        credentials = new Credentials(mEmail, mPassword);
 
-       repository.getLoginObservable(credentials).subscribeWith(getLoginObserver());
+       int errorCode = credentials.isValidData();
 
+       if (errorCode == 2) {
+           repository.getLoginObservable(credentials).subscribeWith(getLoginObserver());
+
+           loginViewInterface.loginSuccess();
+
+       }
+       else if (errorCode == 0) {
+           loginViewInterface.loginError("Insira os dados de acesso para continuar.");
+       }
+       else if (errorCode == 1) {
+            loginViewInterface.loginError("Seu e-mail é inválido!");
+       }
+       else if (errorCode == -1) {
+           loginViewInterface.loginError("Algo deu errado! Tente novamente.");
+       }
 
     }
 
@@ -58,7 +64,8 @@ public class LoginViewModel extends BaseViewModel implements LoginViewModelInter
             @Override
             public void onError(@NonNull Throwable e) {
                 Log.d("LoginViewModel","Error"+e);
-                e.printStackTrace();
+                loginViewInterface.progressDialogDismiss();
+                loginViewInterface.userUnauthorized();
             }
 
             @Override
@@ -69,6 +76,7 @@ public class LoginViewModel extends BaseViewModel implements LoginViewModelInter
             }
         };
     }
+
 
 
 }
