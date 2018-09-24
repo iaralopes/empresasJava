@@ -41,11 +41,13 @@ public class HomeActivity extends AppCompatActivity implements HomeViewInterface
     }
 
     private void setupMVVM() {
-        viewModel.setupMVVM(this);
+
+        binding.getViewModel().setupMVVM(this);
     }
 
     private void getEnterpriseList() {
-        viewModel.getEnterpriseList();
+
+        binding.getViewModel().getEnterpriseList();
     }
 
 
@@ -81,18 +83,11 @@ public class HomeActivity extends AppCompatActivity implements HomeViewInterface
         });
 
 
-
         return true;
      }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
-        int id = item.getItemId();
-        if(id == R.id.action_search){
-       //     Intent i = new Intent(HomeActivity.this, SearchActivity.class);
-       //     startActivity(i);
-        }
 
         return super.onOptionsItemSelected(item);
     }

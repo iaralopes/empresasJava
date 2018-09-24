@@ -18,26 +18,32 @@ import io.reactivex.observers.DisposableObserver;
 
 public class HomeViewModel extends BaseViewModel implements HomeViewModelInterface {
 
+    private HomeViewModelInterface homeViewModelInterface;
+    private HomeViewInterface homeViewInterface;
     private HomeRepository repository;
+
     public ListEnterpriseAdapter adapter;
     private List<Enterprise> listEnterprises;
-    private HomeViewInterface homeViewInterface;
-    private HomeViewModelInterface homeViewModelInterface;
+
 
 
     public void setupMVVM (HomeViewInterface homeViewInterface) {
-        repository = new HomeRepository();
-        adapter = new ListEnterpriseAdapter();
-        this.homeViewInterface = homeViewInterface;
         homeViewModelInterface = this;
+        repository = new HomeRepository();
+        this.homeViewInterface = homeViewInterface;
+
+        adapter = new ListEnterpriseAdapter();
     }
 
     public void listAll () {
+
         adapter.addItems(homeViewModelInterface, listEnterprises);
     }
 
     public void getEnterpriseList () {
+
         repository.getEnterpriseListObservable().subscribeWith(getEnterpriseListObserver());
+
     }
 
 
@@ -46,21 +52,17 @@ public class HomeViewModel extends BaseViewModel implements HomeViewModelInterfa
 
             @Override
             public void onNext(@NonNull EnterpriseList response) {
-                Log.d("response", response.toString());
                 listEnterprises = response.getEnterprises();
                 adapter.addItems(homeViewModelInterface, listEnterprises);
             }
 
             @Override
             public void onError(@NonNull Throwable e) {
-                Log.d("HomeViewModel","Error"+e);
-                e.printStackTrace();
+
             }
 
             @Override
             public void onComplete() {
-                Log.d("HomeViewModel","Completed");
-              //  homeViewInterface.displayEnterprises(adapter);
 
             }
         };
@@ -94,6 +96,7 @@ public class HomeViewModel extends BaseViewModel implements HomeViewModelInterfa
 
 
     public void getDetails(int enterpriseID) {
+
         homeViewInterface.getDetails(enterpriseID);
     }
 

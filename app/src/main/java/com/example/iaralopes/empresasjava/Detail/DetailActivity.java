@@ -10,11 +10,17 @@ import com.example.iaralopes.empresasjava.Home.HomeViewModel;
 import com.example.iaralopes.empresasjava.R;
 import com.example.iaralopes.empresasjava.databinding.ActivityDetailBinding;
 
+import javax.inject.Inject;
+
 public class DetailActivity extends AppCompatActivity implements DetailViewInterface {
 
     private ActivityDetailBinding binding;
     private DetailViewModel viewModel;
+
     private int enterpriseID;
+
+    @Inject
+    DetailRepository detailRepository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,19 +34,26 @@ public class DetailActivity extends AppCompatActivity implements DetailViewInter
         viewModel = ViewModelProviders.of(this).get(DetailViewModel.class);
         binding.setViewModel(viewModel);
 
+        //informando ao dagger sobre o uso de um component e a necessidade de injetar dependencia
+        DetailApplication.getComponent().inject(this);
+
+
         setupMVVM();
         showDetails(enterpriseID);
     }
 
     private void setupMVVM() {
-        viewModel.setupMVVM(this);
+
+        binding.getViewModel().setupMVVM(this, detailRepository);
+
     }
 
     private void showDetails (int enterpriseID) {
-        viewModel.showDetails(enterpriseID);
+        binding.getViewModel().showDetails(enterpriseID);
     }
 
     public void setTitle (String nameEnterprise) {
+
         getSupportActionBar().setTitle(nameEnterprise);
     }
 

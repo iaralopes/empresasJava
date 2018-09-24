@@ -67,8 +67,8 @@ public class LoginActivity extends AppCompatActivity implements LoginViewInterfa
     }
 
     public void userAuthorized() {
-        Log.d("uid", SharedPreferenceUtils.getInstance(MyApplication.getAppContext()).getStringValue("uid", null));
         progressDialog.dismiss();
+
         Intent enterprisesList = new Intent(LoginActivity.this, HomeActivity.class);
         LoginActivity.this.startActivity(enterprisesList);
 
@@ -77,7 +77,6 @@ public class LoginActivity extends AppCompatActivity implements LoginViewInterfa
     public void userUnauthorized() {
 
         LayoutInflater layoutInflater = getLayoutInflater();
-
         View view = layoutInflater.inflate(R.layout.dialog_alert, null);
 
         view.findViewById(R.id.alertButton).setOnClickListener(new View.OnClickListener() {
@@ -91,30 +90,10 @@ public class LoginActivity extends AppCompatActivity implements LoginViewInterfa
         builder.setView(view);
         alertDialog = builder.create();
         alertDialog.show();
-
-
-
-//        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-//
-//        builder.setTitle("Dados incorretos");
-//
-//        builder.setMessage("Por favor, tente novamente");
-//
-//        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialog, int which) {
-//                alertDialogDismiss();
-//            }
-//        });
-//
-//        alertDialog = builder.create();
-//        alertDialog.show();
-
     }
 
-    public void loginSuccess() {
+    public void loadingData() {
         progressDialog = ProgressDialog.show(LoginActivity.this, "Por favor, aguarde...", "");
-//        Toast.makeText(this, "Login success", Toast.LENGTH_SHORT).show();
     }
 
     public void loginError(String message) {
@@ -126,9 +105,6 @@ public class LoginActivity extends AppCompatActivity implements LoginViewInterfa
         progressDialog.dismiss();
     }
 
-    public void alertDialogDismiss() {
-        alertDialog.dismiss();
-    }
 
 
 

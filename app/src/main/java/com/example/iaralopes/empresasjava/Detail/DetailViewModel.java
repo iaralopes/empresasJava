@@ -9,24 +9,30 @@ import com.example.iaralopes.empresasjava.Enterprise.EnterpriseList;
 import com.example.iaralopes.empresasjava.Enterprise.EnterprisePayload;
 
 import io.reactivex.observers.DisposableObserver;
+import io.reactivex.schedulers.Schedulers;
 
 
 public class DetailViewModel extends BaseViewModel {
 
-    public ObservableField<String> detailEnterprise;
 
-    private DetailRepository repository;
-
+    private DetailRepository detailRepository;
     private DetailViewInterface detailViewInterface;
 
-    public void setupMVVM (DetailViewInterface detailViewInterface) {
-        repository = new DetailRepository();
-        detailEnterprise = new ObservableField<>();
+    public ObservableField<String> detailEnterprise;
+
+
+    public void setupMVVM (DetailViewInterface detailViewInterface,
+                           DetailRepository detailRepository) {
+        this.detailRepository = detailRepository;
         this.detailViewInterface = detailViewInterface;
+
+        detailEnterprise = new ObservableField<>();
     }
 
     public void showDetails (int enterpriseID) {
-        repository.getEnterpriseObservable(enterpriseID).subscribeWith(getEnterpriseObserver());
+       detailRepository.getEnterpriseObservable(enterpriseID)
+               .subscribeWith(getEnterpriseObserver());
+
     }
 
     private DisposableObserver<EnterprisePayload> getEnterpriseObserver(){
@@ -34,11 +40,8 @@ public class DetailViewModel extends BaseViewModel {
 
             @Override
             public void onNext(@NonNull EnterprisePayload response) {
-                Log.d("response", response.toString());
                 detailEnterprise.set(response.getEnterprise().getDescription());
                 detailViewInterface.setTitle(response.getEnterprise().getEnterpriseName());
-
-
             }
 
             @Override
@@ -48,11 +51,11 @@ public class DetailViewModel extends BaseViewModel {
 
             @Override
             public void onComplete() {
-                //  homeViewInterface.displayEnterprises(adapter);
 
             }
         };
     }
+
 
 
 }

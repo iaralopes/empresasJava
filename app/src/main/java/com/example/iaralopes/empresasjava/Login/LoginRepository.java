@@ -16,7 +16,6 @@ public class LoginRepository {
                 .authorizeUser(credentials)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
-
     }
 
 }

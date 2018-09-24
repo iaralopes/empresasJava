@@ -24,6 +24,7 @@ public class ListEnterpriseAdapter extends GroupAdapter {
 
     @Override
     public void clear() {
+
         super.clear();
     }
 

@@ -13,48 +13,50 @@ public class LoginViewModel extends BaseViewModel implements LoginViewModelInter
     public ObservableField<String> email;
     public ObservableField<String> password;
 
-
     private LoginViewInterface loginViewInterface;
+    private LoginRepository repository;
+
     private Credentials credentials;
 
-    private LoginRepository repository = new LoginRepository();
 
     public void setupMVVM (LoginViewInterface loginViewInterface) {
         email = new ObservableField<>();
         password = new ObservableField<>();
+
+        repository = new LoginRepository();
         this.loginViewInterface = loginViewInterface;
     }
 
-    public void getAuthHeaders() {
+    public int getAuthHeaders() {
        String mEmail = email.get();
        String mPassword = password.get();
 
        credentials = new Credentials(mEmail, mPassword);
 
-       int errorCode = credentials.isValidData();
+       int statusCode = credentials.isValidData();
 
-       if (errorCode == 2) {
+       if (statusCode == 2) {
            repository.getLoginObservable(credentials).subscribeWith(getLoginObserver());
 
-           loginViewInterface.loginSuccess();
-
+           loginViewInterface.loadingData();
        }
-       else if (errorCode == 0) {
+       else if (statusCode == 1) {
+           loginViewInterface.loginError("Seu e-mail é inválido!");
+       }
+       else if (statusCode == 0) {
            loginViewInterface.loginError("Insira os dados de acesso para continuar.");
        }
-       else if (errorCode == 1) {
-            loginViewInterface.loginError("Seu e-mail é inválido!");
-       }
-       else if (errorCode == -1) {
+       else if (statusCode == -1) {
            loginViewInterface.loginError("Algo deu errado! Tente novamente.");
        }
+
+       return statusCode;
 
     }
 
 
     private DisposableObserver<UserPayload> getLoginObserver(){
         return new DisposableObserver<UserPayload>() {
-
 
             @Override
             public void onNext(@NonNull UserPayload response) {

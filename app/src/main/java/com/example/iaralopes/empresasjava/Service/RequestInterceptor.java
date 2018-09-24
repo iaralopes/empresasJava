@@ -40,7 +40,6 @@ public class RequestInterceptor implements Interceptor {
         SharedPreferenceUtils.getInstance(MyApplication.getAppContext()).setStringValue("client", client);
         SharedPreferenceUtils.getInstance(MyApplication.getAppContext()).setStringValue("access-token", accessToken);
 
-
     }
 
 

@@ -12,7 +12,7 @@ import com.genius.groupie.Item;
 public class ListEnterpriseItem extends Item<RowEnterprisesBinding> {
 
     private Enterprise enterprise;
-    public HomeViewModelInterface homeViewModelInterface;
+    private HomeViewModelInterface homeViewModelInterface;
 
     public ListEnterpriseItem (HomeViewModelInterface homeViewModelInterface,
                                Enterprise enterprise) {

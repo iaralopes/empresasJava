@@ -25,10 +25,6 @@ public interface APIServices {
     @GET("enterprises/{id}")
     Observable<EnterprisePayload> getEnterprise(@Path("id") int id);
 
-//    @GET("enterprises/{id}")
-//    Call<EnterprisePayload> getEnterprise(@Header("access-token") String accessToken, @Header("client") String client,
-//                                          @Header("uid") String uid, @Path("id") int id);
-//
     @POST("users/auth/sign_in")
     Observable<UserPayload> authorizeUser(@Body Credentials credential);
 }
